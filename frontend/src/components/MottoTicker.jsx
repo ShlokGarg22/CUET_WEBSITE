@@ -3,10 +3,16 @@ import { motion as Motion } from 'framer-motion'
 
 const MottoTicker = () => {
   const [loading, setLoading] = useState(true)
+  const [isHovered, setIsHovered] = useState(false)
 
   const marqueeTransition = useMemo(
-    () => ({ repeat: Infinity, duration: 40, ease: 'linear', repeatType: 'loop' }),
-    [],
+    () => ({ 
+      repeat: Infinity, 
+      duration: isHovered ? 20 : 40, // Speed up on hover
+      ease: 'linear', 
+      repeatType: 'loop' 
+    }),
+    [isHovered],
   )
 
   const mottos = useMemo(
@@ -55,12 +61,23 @@ const MottoTicker = () => {
   }
 
   return (
-    <div className="w-full overflow-hidden bg-[#102F76] py-[0.75rem]">
+    <div 
+      className="w-full overflow-hidden bg-[#102F76] py-[0.75rem] relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Animated shimmer effect */}
+      <Motion.div 
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+        animate={{ x: ['-100%', '100%'] }}
+        transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+      />
+      
       <Motion.div
         initial={{ x: '0%' }}
         animate={{ x: ['0%', '-50%'] }}
         transition={marqueeTransition}
-        className="flex w-max items-center whitespace-nowrap gap-8"
+        className="flex w-max items-center whitespace-nowrap gap-8 relative z-10"
       >
         <div className="flex items-center" aria-hidden="false">
           {renderItems(mottos)}

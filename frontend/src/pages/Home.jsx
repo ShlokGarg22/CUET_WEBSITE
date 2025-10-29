@@ -5,6 +5,7 @@ import MottoTicker from '../components/MottoTicker.jsx'
 import ScrollHighlightText from '../components/ScrollHighlightText.jsx'
 import HomeIntroOverlay from '../components/HomeIntroOverlay.jsx'
 import SlideArrowButton from '../components/animata/button/slide-arrow-button'
+import TextbookStack3D from '../components/TextbookStack3D.jsx'
 import logo from '../assets/adobelogo.svg'
 import { getLogoHref } from '../utils/navigation.js'
 
@@ -38,52 +39,81 @@ function Home() {
   return (
     <>
       <HomeIntroOverlay />
-      <div className="relative min-h-screen bg-white text-[#1a1a1a]">
-        <div className="flex min-h-screen flex-col pb-32">
-          <div className="w-full">
-            <header className="flex h-20 w-full items-center px-6 sm:px-10">
-              <Link to={logoHref} className="inline-flex items-center">
-                <img src={logo} alt="pmmp.club" className="h-16 w-auto" />
+      <div className="relative min-h-screen bg-gradient-to-br from-[#fafbfc] via-white to-[#f5f7fa] text-[#1a1a1a] overflow-hidden">
+        {/* Subtle animated background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+          <div className="absolute bottom-40 right-20 w-80 h-80 bg-purple-200/30 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
+        </div>
+
+        <div className="relative flex min-h-screen flex-col pb-32">
+          <div className="w-full relative z-10">
+            <header className="flex h-20 w-full items-center pl-6 pr-6 sm:pl-10 sm:pr-10">
+              <Link to={logoHref} className="inline-flex items-center transform hover:scale-105 transition-transform duration-300 -ml-2">
+                <img src={logo} alt="pmmp.club" className="h-16 w-auto drop-shadow-sm" />
               </Link>
             </header>
             <div className="flex w-full flex-col">
-              <div className="h-px w-full bg-black/10" />
+              <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
               <MottoTicker />
-              <div className="h-px w-full bg-black/10" />
+              <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
             </div>
           </div>
-          <main className="flex flex-1 flex-col">
-            <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-6 text-center sm:px-10">
-              <div className="space-y-6">
-                <h1 className="font-serif-display text-[clamp(3.5rem,9vw,6rem)] leading-tight text-[#1a1a1a]">
-                  Score marks pls bro
-                </h1>
-                <p className="mx-auto max-w-2xl text-lg font-serif-text text-[#2d2d2d] sm:text-xl">
-                  pradhan mantri desh becho yojna
-                </p>
-                <SlideArrowButton
-                  onClick={handleStartClick}
-                  disabled={isArrowAnimating}
-                  text="Get started"
-                  primaryColor="#102f76"
-                  className={`${
-                    isArrowAnimating ? 'cursor-wait opacity-80' : 'hover:-translate-y-0.5 transition-transform'
-                  } shadow-[0_12px_30px_rgba(16,47,118,0.35)]`}
-                />
+
+          <main className="flex flex-1 flex-col relative z-10 items-center justify-center">
+            <div className="mx-auto w-full max-w-7xl px-6 sm:px-10 py-8">
+              <div className="grid lg:grid-cols-2 gap-16 items-center justify-items-center">
+                
+                {/* Left Side - Text Content */}
+                <div className="space-y-8 text-center lg:text-left w-full">
+                  {/* Badge */}
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 shadow-sm">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-sm font-bold text-[#102f76]">All Your CUET Prep in One Place</span>
+                  </div>
+
+                  {/* Main Headline */}
+                  <div className="space-y-4">
+                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1]">
+                      <span className="text-gray-900">Master </span>
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#102f76] via-[#2563eb] to-[#7c3aed]">
+                        Every Subject
+                      </span>
+                      <span className="block text-gray-900 mt-2">With Confidence</span>
+                    </h1>
+                    
+                    <p className="text-xl text-gray-600 leading-relaxed max-w-xl lg:max-w-none">
+                      Your complete digital library for CUET success. Organized, comprehensive, and always at your fingertips.
+                    </p>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="space-y-4 pt-4">
+                    <SlideArrowButton
+                      onClick={handleStartClick}
+                      disabled={isArrowAnimating}
+                      text="Start Learning Free"
+                      primaryColor="#102f76"
+                      className={`${
+                        isArrowAnimating ? 'cursor-wait opacity-80' : 'hover:-translate-y-1 hover:shadow-2xl transition-all duration-300'
+                      } shadow-[0_20px_50px_rgba(16,47,118,0.3)] font-bold text-lg`}
+                    />
+                    <p className="text-sm text-gray-500">
+                      <span className="font-semibold text-green-600">✓</span> No credit card required 
+                      <span className="mx-2">•</span>
+                      <span className="font-semibold text-green-600">✓</span> Free forever
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right Side - 3D Book Stack */}
+                <div className="relative w-full flex items-center justify-center">
+                  <TextbookStack3D />
+                </div>
+
               </div>
-            </section>
+            </div>
           </main>
-        </div>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0">
-          <svg
-            className="h-48 w-full fill-[#102f76]"
-            viewBox="0 0 1440 320"
-            preserveAspectRatio="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path d={domePath} />
-          </svg>
         </div>
       </div>
       <ScrollHighlightText />
